@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from "axios";
 export default axios.create({
-  baseURL: 'http://demo02.gamscloud.vn/adminapi/api/TokenAuth'
-})
+  baseURL: "http://demo02.gamscloud.vn/adminapi/api/TokenAuth",
+});

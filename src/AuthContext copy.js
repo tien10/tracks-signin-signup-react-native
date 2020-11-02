@@ -12,40 +12,19 @@ const authReducer = (state, action) => {
       };
     case "signup":
       return {
-        // ...state,
+        ...state,
         errorMessage: "",
         token: action.payload,
       };
     case "signin":
       return {
-        // ...state,
-        errorMessage: "",
-        token: action.payload,
-      };
-    case "clear_error_message":
-      return {
         ...state,
         errorMessage: "",
+        token: action.payload,
       };
     default:
       return state;
   }
-};
-
-const tryLocalSignin = (dispatch) => async () => {
-  const token = await AsyncStorage.getItem("token");
-  if (token) {
-    dispatch({ type: "signin", payload: token });
-    navigate("TrackListScreen");
-  } else {
-    navigate("SignupScreen");
-  }
-};
-
-const clearErrorMessage = (dispatch) => () => {
-  dispatch({
-    type: "clear_error_message",
-  });
 };
 const signup = (dispatch) => {
   return async ({ userNameOrEmailAddress, password }) => {
@@ -57,7 +36,7 @@ const signup = (dispatch) => {
       // console.log("accessToken: ", res.data.result.accessToken);
       await AsyncStorage.setItem("token", res.data.result.accessToken);
       dispatch({
-        type: "signin",
+        type: "signup",
         payload: res.data.result.accessToken,
       });
       // chuyen toi man hinh chinh
@@ -66,7 +45,7 @@ const signup = (dispatch) => {
       console.log("error: ", error.message);
       dispatch({
         type: "add_error",
-        payload: "Something went wrong with sign up",
+        payload: "Something went wrong with signup",
       });
     }
   };
@@ -102,6 +81,6 @@ const signout = (dispatch) => {
 };
 export const { Context, Provider } = createDataContext(
   authReducer,
-  { signup, signin, clearErrorMessage, tryLocalSignin },
+  { signup, signin },
   { token: null, errorMessage: "" }
 );

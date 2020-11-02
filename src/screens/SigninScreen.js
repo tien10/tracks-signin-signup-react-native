@@ -3,10 +3,11 @@ import { StyleSheet, View } from "react-native";
 import { Context as AuthContext } from "../context/AuthContext";
 import AuthForm from "../components/AuthForm";
 import NavLink from "../components/NavLink";
+import { NavigationEvents } from "react-navigation";
 
 const SigninScreen = ({ navigation }) => {
-  const { state, signin } = useContext(AuthContext);
-  console.log("state: ", state);
+  const { state, signin, clearErrorMessage } = useContext(AuthContext);
+  console.log("state sigin: ", state);
 
   // console.log(state);
   return (
@@ -14,6 +15,18 @@ const SigninScreen = ({ navigation }) => {
       {/* <Text>SignupScreen</Text>
       <Button title="Go to SigninScreen" onPress={() => { navigation.navigate('SigninScreen') }} />
       <Button title="Go to mainFlow" onPress={() => { navigation.navigate('mainFlow') }} /> */}
+      {/* <NavigationEvents
+        // onWillBlur={clearErrorMessage}
+        // onWillFocus={clearErrorMessage}
+        // onDidBlur={clearErrorMessage}
+        // onDidFocus={clearErrorMessage}
+      /> */}
+      {/* <NavigationEvents
+        onWillFocus={(payload) => console.log("will focus signin", payload)}
+        onDidFocus={(payload) => console.log("did focus signin", payload)}
+        onWillBlur={(payload) => console.log("will blur signin", payload)}
+        onDidBlur={(payload) => console.log("did blur signin", payload)}
+      /> */}
       <AuthForm
         headerText="Signin"
         errorMessage={state.errorMessage}

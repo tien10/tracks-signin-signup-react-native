@@ -1,14 +1,13 @@
-import React, { useContext, useState } from "react";
-import { Button, Input, Text } from "react-native-elements";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
-import Spacer from "../components/Spacer";
+import React, { useContext, useEffect } from "react";
+import { StyleSheet, View } from "react-native";
 import { Context as AuthContext } from "../context/AuthContext";
 import AuthForm from "../components/AuthForm";
 import NavLink from "../components/NavLink";
+import { NavigationEvents } from "react-navigation";
 
 const SignupScreen = ({ navigation }) => {
-  const { state, signup } = useContext(AuthContext);
-  console.log("state: ", state);
+  const { state, signup, clearErrorMessage } = useContext(AuthContext);
+  console.log("state signup: ", state);
 
   // console.log(state);
   return (
@@ -16,6 +15,18 @@ const SignupScreen = ({ navigation }) => {
       {/* <Text>SignupScreen</Text>
       <Button title="Go to SigninScreen" onPress={() => { navigation.navigate('SigninScreen') }} />
       <Button title="Go to mainFlow" onPress={() => { navigation.navigate('mainFlow') }} /> */}
+      <NavigationEvents
+        onWillBlur={clearErrorMessage}
+        onWillFocus={clearErrorMessage}
+        // onDidBlur={clearErrorMessage}
+        // onDidFocus={clearErrorMessage}
+      />
+      {/* <NavigationEvents
+        onWillFocus={(payload) => console.log("will focus signup", payload)}
+        onDidFocus={(payload) => console.log("did focus signup", payload)}
+        onWillBlur={(payload) => console.log("will blur signup", payload)}
+        onDidBlur={(payload) => console.log("did blur signup", payload)}
+      /> */}
       <AuthForm
         headerText="Signup"
         errorMessage={state.errorMessage}
@@ -26,6 +37,7 @@ const SignupScreen = ({ navigation }) => {
         routeName="SigninScreen"
         text="Already have an account? Sign in instead"
       />
+      {/* <NavLink routeName="DSPB" text="Go to DSPB" /> */}
     </View>
   );
 };
@@ -40,7 +52,7 @@ SignupScreen.navigationOptions = () => {
 const styles = StyleSheet.create({
   container: {
     // borderWidth: 10,
-    // borderColor: 'red',
+    // borderColor: "red",
     flex: 1,
     justifyContent: "flex-start",
     // marginBottom: 250,
